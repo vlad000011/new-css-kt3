@@ -1,0 +1,200 @@
+
+$brand: #2a4d69;
+$accent: #f08a5d;
+$accent-hover: #ec682e;
+$line: #699bc3;
+$text: #222;
+$bg: #fefefe;
+
+
+$bp-sm: 600px;   // телефоны → планшеты
+$bp-md: 900px;   // планшеты → ноутбуки
+$bp-lg: 1200px;  // десктопы
+
+
+:root {
+  --container: min(100% - 2rem, 72rem); 
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  color: $text;
+  background: $bg;
+  line-height: 1.6;
+  margin: 0;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+main { width: var(--container); margin-inline: auto; padding: clamp(1rem, 2vw + 0.5rem, 2rem); }
+main section { margin-bottom: clamp(2rem, 4vw, 3rem); }
+main section h2 {
+  border-left: 4px solid $brand;
+  padding-left: .5rem;
+  margin-bottom: 1rem;
+}
+
+
+header {
+  background: $brand;
+  color: #fff;
+  padding: 1rem;
+  > h1 {
+    margin: 0 0 .5rem 0;
+    font-size: clamp(1.25rem, 1rem + 1.5vw, 2rem);
+  }
+  nav ul {
+    --gap: 1rem;
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap);
+    list-style: none;
+    margin: 0; padding: 0;
+    li a {
+      color: #fff;
+      text-decoration: none;
+      position: relative;
+      padding-block: .25rem;
+      &::after {
+        content: "";
+        position: absolute; inset: auto 0 -4px 0;
+        height: 2px; width: 0; background: $accent; transition: width .3s ease;
+      }
+      &:hover::after { width: 100%; }
+      &:focus-visible { outline: 2px dashed $accent; outline-offset: 3px; border-radius: 2px; }
+    }
+  }
+}
+
+
+#new {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+
+  article {
+    border: 1px solid $line;
+    border-radius: 8px;
+    padding: 1rem;
+    background: #fff;
+    transition: transform .2s ease, box-shadow .2s ease;
+    display: grid; 
+    gap: .75rem;
+
+    &:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,.08); }
+
+    header h3 { margin: 0 0 .25rem 0; font-size: clamp(1rem, .8rem + .8vw, 1.25rem); }
+
+    figure {
+      margin: 0;
+      img { border-radius: 6px; aspect-ratio: 3 / 2; object-fit: cover; }
+      figcaption { font-size: .875rem; color: #555; }
+    }
+
+    details {
+      summary { cursor: pointer; color: $accent; }
+      summary:hover { text-decoration: underline; }
+    }
+  }
+}
+
+
+#authors {
+  display: grid;
+  gap: 1rem;
+
+  article {
+    padding: 1rem;
+    border-left: 3px solid $accent;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 1px 0 rgba(0,0,0,.03);
+
+    aside { font-size: .95rem; color: darken($accent, 15%); }
+  }
+}
+
+@media (min-width: $bp-md) {
+  #authors { grid-template-columns: repeat(2, 1fr); }
+}
+
+
+#events {
+  display: grid;
+  gap: 1rem;
+  article {
+    border-bottom: 1px dashed $brand;
+    padding: 1rem 0;
+    h3 { position: relative; padding-left: 1.25rem; margin: 0 0 .25rem 0; }
+    h3::before { content: "★"; color: $accent; position: absolute; left: 0; top: 0; }
+  }
+}
+
+@media (min-width: $bp-md) {
+  #events { grid-template-columns: 1fr 1fr; }
+}
+
+
+#contacts {
+  display: grid;
+  gap: 1rem;
+  align-items: start;
+
+  form {
+    display: grid;
+    gap: .5rem;
+    max-width: 28rem;
+
+    input {
+      padding: .6rem .7rem;
+      border: 1px solid $line; border-radius: 6px;
+      &:focus { border-color: $accent; outline: none; box-shadow: 0 0 0 4px rgba($accent, .25); }
+    }
+
+    button {
+      background: $accent; color: #fff; padding: .6rem .9rem; border: 0; border-radius: 6px; cursor: pointer;
+      &:hover { background: $accent-hover; }
+    }
+  }
+}
+
+@media (min-width: $bp-md) {
+  #contacts { grid-template-columns: 1fr 1fr; }
+}
+
+
+footer {
+  background: $brand; color: #fff; text-align: center; padding: 1rem;
+  a { color: $accent; text-decoration: none; &:hover { text-decoration: underline; } }
+}
+
+
+@media (min-width: $bp-lg) {
+  main { padding-inline: 2rem; }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root { --container: min(100% - 2rem, 72rem); }
+  body { background: #0f1115; color: #e6e6e6; }
+  header, footer { background: mix($brand, #000, 80%); }
+  #new article, #authors article { background: #151823; border-color: rgba(255,255,255,.08); }
+  #events article { border-color: rgba(255,255,255,.2); }
+  #contacts form input { background: #0f1115; color: #e6e6e6; border-color: rgba(255,255,255,.2); }
+}
+
+@media print {
+  header, footer, nav, aside, form, details { display: none !important; }
+  main { width: auto; padding: 0; }
+  a::after { content: " (" attr(href) ")"; font-size: .9em; }
+}
